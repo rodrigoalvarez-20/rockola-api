@@ -1,0 +1,31 @@
+{
+  "name": "rockola-api",
+  "version": "1.0.0",
+  "description": "Servicio Backend escrito en Javascript con ExpressJS y Mysql para la aplicacion web Rock-Ola",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodrigoalvarez-20/rockola-api.git"
+  },
+  "author": "Rodrigo Alvarez, Hiram Gomez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rodrigoalvarez-20/rockola-api/issues"
+  },
+  "homepage": "https://github.com/rodrigoalvarez-20/rockola-api#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "http-status-codes": "^2.1.4",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
