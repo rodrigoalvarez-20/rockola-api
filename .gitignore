@@ -1,2 +1,7 @@
-node_modules/*
 /node_modules
+/build
+/dist
+/out
+.DS_Store
+*.pem
+package-lock.json
