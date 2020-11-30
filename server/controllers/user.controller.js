@@ -1,4 +1,4 @@
-import User from "../models/user.model.js";
+import { User } from "../models/index.js";
 import HttpException from "../utils/httpException.js";
 import { StatusCodes } from "http-status-codes";
 
@@ -17,7 +17,5 @@ const loginUser = (req, res, next) => {
         return res.status(StatusCodes.OK).json({ token: response });
     });
 }
-
-
 
 export { registerUser, loginUser };

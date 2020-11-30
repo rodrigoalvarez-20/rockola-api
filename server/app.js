@@ -4,7 +4,7 @@ import cors from "cors";
 import { StatusCodes } from "http-status-codes"
 
 import errorHandler from "./middlewares/errorHandler.js";
-import UserRouter from "./routes/user.routes.js";
+import {UserRouter, StudioRouter} from "./routes/index.js";
 
 const app = express();
 
@@ -17,6 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/users", UserRouter);
+app.use("/api/v1/studios", StudioRouter);
 
 app.use(errorHandler);
 

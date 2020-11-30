@@ -1,10 +1,9 @@
-import mysql from "mysql";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-
-import dbConn from "../config/db.config.js";
 import { StatusCodes } from "http-status-codes";
+
+import dbConn from "../config/dbConfig.config.js";
 
 dotenv.config();
 
@@ -42,8 +41,6 @@ User.register = (newUser, result) => {
 
 User.login = (user, result) => {
     User.findByEmail(user.email, (error, userFind) => {
-        console.info(userFind);
-        console.info(error);
         if (error) return result({ error: error }, null);
         else if (!Object.keys(userFind).length) return result({ error: "No se ha encontrado ningun usuario con el email", code: StatusCodes.NOT_FOUND }, null);
         bcrypt.compare(user.password, userFind.password).then(correct => {
