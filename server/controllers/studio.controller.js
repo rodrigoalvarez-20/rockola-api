@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 
 const addStudio = (req, res, next) => {
     const newStudio = req.body;
-    Studio.addStudioInfo(newStudio, (error, response) => {
+    Studio.add(newStudio, (error, response) => {
         if (error) return next(new HttpException(
             error.code || StatusCodes.INTERNAL_SERVER_ERROR,
             "Ha ocurrido un error al añadir el estudio de grabacion",
@@ -14,7 +14,7 @@ const addStudio = (req, res, next) => {
 }
 
 const getAllStudios = (req, res, next) => {
-    Studio.getAllStudios((error, response) => {
+    Studio.getAll((error, response) => {
         if (error) return next(new HttpException(
             error.code || StatusCodes.INTERNAL_SERVER_ERROR,
             "Ha ocurrido un error al obtener la lista de estudios de grabacion",
@@ -25,7 +25,7 @@ const getAllStudios = (req, res, next) => {
 
 const getStudioInfo = (req, res, next) => {
     const { id, name } = req.query;
-    Studio.searchStudios({ id, name }, (error, response) => {
+    Studio.search({ id, name }, (error, response) => {
         if (error) return next(new HttpException(
             error.code || StatusCodes.INTERNAL_SERVER_ERROR,
             "Ha ocurrido un error al obtener la informacion del estudio de grabacion",
@@ -36,7 +36,7 @@ const getStudioInfo = (req, res, next) => {
 
 const updateStudio = (req, res, next) => {
     const updateOps = req.body;
-    Studio.updateStudio(updateOps, (error, response) => {
+    Studio.update(updateOps, (error, response) => {
         if (error) return next(new HttpException(
             error.code || StatusCodes.INTERNAL_SERVER_ERROR,
             "Ha ocurrido un error al actualizar la informacion del estudio de grabacion",
@@ -47,7 +47,7 @@ const updateStudio = (req, res, next) => {
 
 const deleteStudio = (req, res, next) => {
     const { id } = req.query;
-    Studio.deleteStudio(id, (error, response) => {
+    Studio.delete(id, (error, response) => {
         if (error) return next(new HttpException(
             error.code || StatusCodes.INTERNAL_SERVER_ERROR,
             "Ha ocurrido un error al eliminar el estudio de grabacion",

@@ -2,12 +2,18 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { StatusCodes } from "http-status-codes";
+import mysql from "mysql";
 
 import dbConn from "../config/dbConfig.config.js";
 
 dotenv.config();
 
 const USERS_TABLE = "users";
+const COL_NOMBRE = "nombre";
+const COL_USUARIO = "usuario";
+const COL_EMAIL = "email";
+const COL_PASSWORD = "password";
+const COL_ROLE = "role";
 
 const User = () => { };
 
@@ -22,10 +28,11 @@ User.register = (newUser, result) => {
                 else {
                     const user = {
                         id: 0,
-                        name: newUser.name,
+                        nombre: newUser.name,
+                        usuario: newUser.usuario,
                         email: newUser.email,
                         password: hashPwd,
-                        type: newUser.type || "user"
+                        role: newUser.role || "user"
                     }
                     dbConn.query(`INSERT INTO ${USERS_TABLE} SET ?`, [user], (err, res) => {
                         if (err) result({ error: err }, null);
@@ -48,8 +55,9 @@ User.login = (user, result) => {
             const token = jwt.sign(
                 {
                     id: userFind.id,
+                    user: userFind.usuario,
                     email: userFind.email,
-                    type: userFind.type
+                    role: userFind.role
                 },
                 process.env.JWT_KEY
             );
@@ -59,7 +67,7 @@ User.login = (user, result) => {
 }
 
 User.findByEmail = (email, result) => {
-    dbConn.query(`SELECT * FROM ${USERS_TABLE} WHERE email = ? LIMIT 1`, [email], (err, res) => {
+    dbConn.query(`SELECT * FROM ${USERS_TABLE} WHERE ${COL_EMAIL} = ? LIMIT 1`, [mysql.escape(email)], (err, res) => {
         if (err) return result({ error: err }, null);
         else return result(null, { ...res[0] });
     });
