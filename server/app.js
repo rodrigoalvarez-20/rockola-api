@@ -4,7 +4,17 @@ import cors from "cors";
 import { StatusCodes } from "http-status-codes"
 
 import errorHandler from "./middlewares/errorHandler.js";
-import {UserRouter, StudioRouter} from "./routes/index.js";
+import {
+    UserRouter,
+    StudioRouter,
+    AlbumRouter,
+    ArtistRouter,
+    GroupRouter,
+    InfluenceRouter,
+    MusicianRouter,
+    SongRouter,
+    TablatureRouter
+} from "./routes/index.js";
 
 const app = express();
 
@@ -18,6 +28,13 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/users", UserRouter);
 app.use("/api/v1/studios", StudioRouter);
+app.use("/api/v1/albums", AlbumRouter);
+app.use("/api/v1/artists", ArtistRouter);
+app.use("/api/v1/groups", GroupRouter);
+app.use("/api/v1/influences", InfluenceRouter);
+app.use("/api/v1/musicians", MusicianRouter);
+app.use("/api/v1/songs", SongRouter);
+app.use("/api/v1/tablatures", TablatureRouter);
 
 app.use(errorHandler);
 

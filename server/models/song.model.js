@@ -58,4 +58,4 @@ Song.delete = (id, result) => {
     });
 }
 
-export default Group;
+export default Song;
