@@ -8,7 +8,7 @@ import dbConn from "../config/dbConfig.config.js";
 
 dotenv.config();
 
-const USERS_TABLE = "users";
+const USERS_TABLE = "usuario";
 const COL_NOMBRE = "nombre";
 const COL_USUARIO = "usuario";
 const COL_EMAIL = "email";
@@ -19,8 +19,9 @@ const User = () => { };
 
 User.register = (newUser, result) => {
     User.findByEmail(newUser.email, (error, usrFind) => {
+        console.info(usrFind);
         if (error) result({ error: error }, null);
-        else if (usrFind) result({ error: "El usuario ya ha sido registrado", code: StatusCodes.CONFLICT }, null);
+        else if (usrFind === {}) result({ error: "El usuario ya ha sido registrado", code: StatusCodes.CONFLICT }, null);
         else {
             bcrypt.hash(newUser.password, 10).then(hashPwd => {
                 if (!hashPwd)
@@ -49,7 +50,7 @@ User.register = (newUser, result) => {
 User.login = (user, result) => {
     User.findByEmail(user.email, (error, userFind) => {
         if (error) return result({ error: error }, null);
-        else if (!Object.keys(userFind).length) return result({ error: "No se ha encontrado ningun usuario con el email", code: StatusCodes.NOT_FOUND }, null);
+        else if (userFind === {}) return result({ error: "No se ha encontrado ningun usuario con el email", code: StatusCodes.NOT_FOUND }, null);
         bcrypt.compare(user.password, userFind.password).then(correct => {
             if (!correct) return result({ error: "Las contraseñas no coinciden", code: StatusCodes.BAD_REQUEST }, null);
             const token = jwt.sign(
@@ -67,7 +68,7 @@ User.login = (user, result) => {
 }
 
 User.findByEmail = (email, result) => {
-    dbConn.query(`SELECT * FROM ${USERS_TABLE} WHERE ${COL_EMAIL} = ? LIMIT 1`, [mysql.escape(email)], (err, res) => {
+    dbConn.query(`SELECT * FROM ${USERS_TABLE} WHERE ${COL_EMAIL} = ?`, email, (err, res) => {
         if (err) return result({ error: err }, null);
         else return result(null, { ...res[0] });
     });
