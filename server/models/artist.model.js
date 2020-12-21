@@ -6,7 +6,7 @@ const COL_ID = "id";
 const COL_NOMBRE = "nombre";
 const COL_GENERO = "genero";
 const COL_CDNAC = "cd_nacimiento";
-const COL_BIBLIO = "bibliografia" // ---> Biografia;
+const COL_BIO = "biografia" // ---> Biografia;
 const COL_SITIOWEB = "sitio_web";
 
 const Artist = () => { };
@@ -40,7 +40,7 @@ Artist.search = ({ id = "", name = "" }, result) => {
 }
 
 Artist.update = ({ id, name, gender, cdNac, bio, web }, result) => {
-    dbConn.query(`UPDATE ${ARTIST_TABLE} SET ${COL_NOMBRE} = ?, ${COL_GENERO} = ?, ${COL_CDNAC} = ?, ${COL_BIBLIO} = ?, ${COL_SITIOWEB} = ? WHERE ${COL_ID} = ?`,
+    dbConn.query(`UPDATE ${ARTIST_TABLE} SET ${COL_NOMBRE} = ?, ${COL_GENERO} = ?, ${COL_CDNAC} = ?, ${COL_BIO} = ?, ${COL_SITIOWEB} = ? WHERE ${COL_ID} = ?`,
         [mysql.escape(name), mysql.escape(gender), mysql.escape(cdNac), mysql.escape(bio), mysql.escape(web), mysql.escape(id)], (error, res) => {
             if (error) return result({ error: error }, null);
             return result(null, { message: "Se ha actualizado correctamente el artista" });
