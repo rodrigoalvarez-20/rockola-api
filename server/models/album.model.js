@@ -9,7 +9,7 @@ const COL_NUMCANC = "num_canciones";
 const COL_PORTADA = "img_portada";
 const COL_CPORTADA = "img_contraportada";
 const COL_IDESTUDIO = "id_estudio";
-const COL_IDARTISTA = "id_artista";
+const COL_IDARTISTA = "id_estudio";
 
 const Album = () => { };
 
