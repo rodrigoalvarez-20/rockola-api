@@ -24,21 +24,6 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan("dev"));
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With,content-type"
-  );
-  res.setHeader("Access-Control-Allow-Credentials", true);
-
-  next();
-});
-
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Pagina principal de la api" });
 });
@@ -54,6 +39,19 @@ app.use("/api/v1/songs", SongRouter);
 app.use("/api/v1/tablatures", TablatureRouter);
 
 app.use(errorHandler);
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, PATCH, DELETE");
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "*");
+    return res.status(200).json({});
+  }
+  next();
+});
 
 app.use("*", (req, res) => {
   return res
