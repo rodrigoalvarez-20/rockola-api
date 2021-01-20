@@ -15,7 +15,7 @@ const registerUser = (req, res, next) => {
       );
     return res
       .status(StatusCodes.OK)
-      .json({ message: "Se ha añadido correctamente", ...response });
+      .json({ message: "Se ha registrado correctamente", response });
   });
 };
 
