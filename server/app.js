@@ -24,32 +24,6 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan("dev"));
 
-/* app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json"
-  );
-  next();
-}); */
-
-/* app.options("*", cors());
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
-
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, PATCH, DELETE");
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "*");
-    //return res.status(200).json({});
-  }
-  next();
-}); */
-
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Pagina principal de la api" });
 });
