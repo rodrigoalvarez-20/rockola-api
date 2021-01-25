@@ -16,8 +16,11 @@ Song.add = (newSong, result) => {
   });
 };
 
-Song.getAll = (result) => {
-  dbConn.query(`SELECT * FROM ${SONG_TABLE}`, (error, res) => {
+Song.getAll = (decade, order = "asc", result) => {
+  const query = `select ${SONG_TABLE}.*, album.img_portada from ${SONG_TABLE} INNER JOIN album ON ${SONG_TABLE}.id_album = album.id WHERE album.fecha > ${Number(
+    decade
+  )} AND album.fecha < ${Number(decade) + 10} ORDER BY nombre ${order}`;
+  dbConn.query(query, (error, res) => {
     if (error) return result({ error: error }, null);
     return result(null, {
       songs: res,
@@ -27,13 +30,7 @@ Song.getAll = (result) => {
 };
 
 Song.search = ({ id = "", name = "", idAlb = "", idMusc = "" }, result) => {
-  const queryStr = `SELECT * FROM ${SONG_TABLE} WHERE ${COL_ID} = ${mysql.escape(
-    id
-  )} OR ${COL_NOMBRE} = ${mysql.escape(
-    name
-  )} OR ${COL_IDALBUM} = ${mysql.escape(
-    idAlb
-  )} OR ${COL_IDMUSICO} = ${mysql.escape(idMusc)}`;
+  const queryStr = `SELECT ${SONG_TABLE}.*, album.img_portada FROM ${SONG_TABLE} INNER JOIN album ON ${SONG_TABLE}.id_album = album.id WHERE ${SONG_TABLE}.id = ${id};`;
   dbConn.query(queryStr, (error, res) => {
     if (error) return result({ error: error }, null);
     return result(null, {

@@ -17,9 +17,14 @@ Studio.add = (newStudio, result) => {
   });
 };
 
-Studio.getAll = (result) => {
+Studio.getAll = (decade, order = "asc", result) => {
   //dbConn.connect();
-  dbConn.query(`SELECT * FROM ${STUDIO_TABLE}`, (error, res) => {
+  const qString = `select ${STUDIO_TABLE}.* from ${STUDIO_TABLE} INNER JOIN album ON album.id_estudio = ${STUDIO_TABLE}.id WHERE album.fecha > ${Number(
+    decade
+  )} AND album.fecha < ${
+    Number(decade) + 10
+  } GROUP BY nombre order by nombre ${order};`;
+  dbConn.query(qString, (error, res) => {
     if (error) return result({ error: error }, null);
     return result(null, {
       studios: res,

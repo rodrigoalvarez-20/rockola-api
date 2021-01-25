@@ -37,9 +37,7 @@ Album.getAll = (decade, order = "asc", result) => {
 
 //Implementar query y vista de informacion de estudio y artista (id)
 Album.search = ({ id = "", name = "" }, result) => {
-  const queryStr = `SELECT * FROM ${ALBUM_TABLE} WHERE ${COL_ID} = ${mysql.escape(
-    id
-  )} OR ${COL_NOMBRE} = ${mysql.escape(name)}`;
+  const queryStr = `SELECT ${ALBUM_TABLE}.*, estudio_grabacion.nombre as estudio FROM ${ALBUM_TABLE} INNER JOIN estudio_grabacion on ${ALBUM_TABLE}.id_estudio = estudio_grabacion.id WHERE ${ALBUM_TABLE}.id = ${id}; `;
   dbConn.query(queryStr, (error, res) => {
     if (error) return result({ error: error }, null);
     return result(null, {

@@ -21,7 +21,8 @@ const addSong = (req, res, next) => {
 };
 
 const getAllSongs = (req, res, next) => {
-  Song.getAll((error, response) => {
+  const { decade, order } = req.query;
+  Song.getAll(decade, order, (error, response) => {
     if (error)
       return next(
         new HttpException(

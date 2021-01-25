@@ -22,7 +22,8 @@ const addStudio = (req, res, next) => {
 };
 
 const getAllStudios = (req, res, next) => {
-  Studio.getAll((error, response) => {
+  const { decade, order } = req.query;
+  Studio.getAll(decade, order, (error, response) => {
     if (error)
       return next(
         new HttpException(
