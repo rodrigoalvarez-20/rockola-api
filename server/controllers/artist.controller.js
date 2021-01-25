@@ -21,7 +21,8 @@ const addArtist = (req, res, next) => {
 };
 
 const getAllArtists = (req, res, next) => {
-  Artist.getAll((error, response) => {
+  const { decade, order } = req.query;
+  Artist.getAll(decade, order, (error, response) => {
     if (error)
       return next(
         new HttpException(

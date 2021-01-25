@@ -21,7 +21,9 @@ const addAlbum = (req, res, next) => {
 };
 
 const getAllAlbums = (req, res, next) => {
-  Album.getAll((error, response) => {
+  const { order, decade } = req.query;
+  console.info(req.query);
+  Album.getAll(decade, order, (error, response) => {
     if (error)
       return next(
         new HttpException(

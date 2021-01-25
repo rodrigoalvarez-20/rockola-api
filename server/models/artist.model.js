@@ -18,8 +18,16 @@ Artist.add = (newArtist, result) => {
   });
 };
 
-Artist.getAll = (result) => {
-  dbConn.query(`SELECT * FROM ${ARTIST_TABLE}`, (error, res) => {
+Artist.getAll = (decade, order = "asc", result) => {
+  const qString = decade
+    ? `SELECT ${ARTIST_TABLE}.* FROM ${ARTIST_TABLE} INNER JOIN album on ${ARTIST_TABLE}.id = album.id_artista AND album.fecha > ${Number(
+        decade
+      )} and album.fecha < ${
+        Number(decade) + 10
+      } GROUP BY artista.nombre ORDER BY ${ARTIST_TABLE}.nombre ${order};`
+    : `SELECT * FROM ${ARTIST_TABLE} ORDER BY ${ARTIST_TABLE}.nombre ${order}`;
+
+  dbConn.query(qString, (error, res) => {
     if (error) return result({ error: error }, null);
     return result(null, {
       artists: res,
@@ -29,9 +37,11 @@ Artist.getAll = (result) => {
 };
 
 Artist.search = ({ id = "", name = "" }, result) => {
-  const queryStr = `SELECT * FROM ${ARTIST_TABLE} WHERE ${COL_ID} = ${mysql.escape(
-    id
-  )} OR ${COL_NOMBRE} = ${mysql.escape(name)}`;
+  const queryStr = `
+  SELECT ${ARTIST_TABLE}.*, grupo.nombre as banda FROM ${ARTIST_TABLE} 
+	INNER JOIN album on ${ARTIST_TABLE}.id = album.id_artista 
+    INNER JOIN grupo on ${ARTIST_TABLE}.id = grupo.id_artista
+    WHERE ${ARTIST_TABLE}.id = ${id} group by ${ARTIST_TABLE}.nombre;`;
   dbConn.query(queryStr, (error, res) => {
     if (error) return result({ error: error }, null);
     return result(null, {
