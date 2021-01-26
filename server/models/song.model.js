@@ -19,7 +19,7 @@ Song.add = (newSong, result) => {
 Song.getAll = (decade, order = "asc", result) => {
   const query = `select ${SONG_TABLE}.*, album.img_portada from ${SONG_TABLE} INNER JOIN album ON ${SONG_TABLE}.id_album = album.id WHERE album.fecha > ${Number(
     decade
-  )} AND album.fecha < ${Number(decade) + 10} ORDER BY nombre ${order}`;
+  )} AND album.fecha <= ${Number(decade) + 10} ORDER BY nombre ${order}`;
   dbConn.query(query, (error, res) => {
     if (error) return result({ error: error }, null);
     return result(null, {

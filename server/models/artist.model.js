@@ -22,7 +22,7 @@ Artist.getAll = (decade, order = "asc", result) => {
   const qString = decade
     ? `SELECT ${ARTIST_TABLE}.* FROM ${ARTIST_TABLE} INNER JOIN album on ${ARTIST_TABLE}.id = album.id_artista AND album.fecha > ${Number(
         decade
-      )} and album.fecha < ${
+      )} and album.fecha <= ${
         Number(decade) + 10
       } GROUP BY artista.nombre ORDER BY ${ARTIST_TABLE}.nombre ${order};`
     : `SELECT * FROM ${ARTIST_TABLE} ORDER BY ${ARTIST_TABLE}.nombre ${order}`;

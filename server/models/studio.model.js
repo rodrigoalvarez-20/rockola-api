@@ -21,7 +21,7 @@ Studio.getAll = (decade, order = "asc", result) => {
   //dbConn.connect();
   const qString = `select ${STUDIO_TABLE}.* from ${STUDIO_TABLE} INNER JOIN album ON album.id_estudio = ${STUDIO_TABLE}.id WHERE album.fecha > ${Number(
     decade
-  )} AND album.fecha < ${
+  )} AND album.fecha <= ${
     Number(decade) + 10
   } GROUP BY nombre order by nombre ${order};`;
   dbConn.query(qString, (error, res) => {
